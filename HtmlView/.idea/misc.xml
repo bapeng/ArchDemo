@@ -28,7 +28,7 @@
     </option>
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="Tim" />
+    <dictionary name="arch" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -63,21 +63,6 @@
     <option name="id" value="Android" />
   </component>
   <component name="SvnConfiguration">
-    <configuration>C:\Users\Tim\AppData\Roaming\Subversion</configuration>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
 </project>
