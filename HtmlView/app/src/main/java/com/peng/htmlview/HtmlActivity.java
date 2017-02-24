@@ -1,6 +1,5 @@
 package com.peng.htmlview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,10 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 
 public class HtmlActivity extends AppCompatActivity {
 
@@ -46,16 +41,17 @@ public class HtmlActivity extends AppCompatActivity {
         StringBuilder builder = new StringBuilder();
         Intent intent = getIntent();
         builder.append(intent.toString()).append("\n\n");
-        textView.append(builder.toString());
-
         Uri uri = intent.getData();
+        String type = intent.getType();
+        textView.append(uri.toString() + "\n");
+        textView.append("mime=" + type + "\n");
         final String path = uri.getPath();
 
         sync.submit(new SyncUtil.RunBack() {
             @Override
             public Object back() {
                 String encode = FileTool.codeString(path);
-                sync.publish("-------文件编码：" + encode + "-------\n\n");
+                sync.publish("文件编码：" + encode + "\n\n");
                 decodeFile(path, encode);
                 return null;
             }

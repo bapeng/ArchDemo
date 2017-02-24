@@ -40,11 +40,11 @@ public class SyncUtil {
         }
     };
 
-    public void runUI(Runnable runnable){
+    public void runUI(Runnable runnable) {
         handler.post(runnable);
     }
 
-    public void runUI(Runnable runnable, long delay){
+    public void runUI(Runnable runnable, long delay) {
         handler.postDelayed(runnable, delay);
     }
 

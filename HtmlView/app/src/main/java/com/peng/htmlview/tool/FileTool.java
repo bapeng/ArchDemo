@@ -14,16 +14,17 @@ public class FileTool {
             FileInputStream fis = new FileInputStream(path);
             UniversalDetector detector = new UniversalDetector(null);
             int read;
-            while ((read = fis.read(buf)) != -1 && !detector.isDone()) {
+            while ((read = fis.read(buf)) > 0 && !detector.isDone()) {
                 detector.handleData(buf, 0, read);
             }
             fis.close();
             detector.dataEnd();
             charset = detector.getDetectedCharset();
+            detector.reset();
         } catch (IOException e) {
             charset = "UTF-8";
         }
-        if(charset == null){
+        if (charset == null) {
             charset = "UTF-8";
         }
         return charset;
