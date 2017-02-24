@@ -5,20 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.peng.htmlview.tool.FileTool;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.Arrays;
+import java.io.InputStreamReader;
 
 public class HtmlActivity extends Activity {
 
@@ -51,10 +49,14 @@ public class HtmlActivity extends Activity {
         sync.submit(new SyncUtil.RunBack() {
             @Override
             public Object back() {
-                File file = new File(path);
+                String charset = FileTool.charset(path);
+                FileInputStream fis = null;
+                InputStreamReader isr = null;
+                BufferedReader reader = null;
                 try {
-                    FileReader fr = new FileReader(file);
-                    BufferedReader reader = new BufferedReader(fr);
+                    fis = new FileInputStream(path);
+                    isr = new InputStreamReader(fis, charset);
+                    reader = new BufferedReader(isr);
                     String str;
                     while (true) {
                         str = reader.readLine();
@@ -62,14 +64,32 @@ public class HtmlActivity extends Activity {
                             break;
                         } else {
                             sync.publish(str + "\n");
-                            Thread.sleep(50);
+                            Thread.sleep(20);
                         }
                     }
                 } catch (FileNotFoundException e) {
                     ShowToast("文件不存在");
                 } catch (IOException e) {
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                        }
+                    }
+                    if (isr != null) {
+                        try {
+                            isr.close();
+                        } catch (IOException e) {
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                        }
+                    }
                 }
                 return null;
             }
