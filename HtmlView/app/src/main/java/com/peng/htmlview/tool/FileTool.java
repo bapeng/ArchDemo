@@ -1,38 +1,33 @@
 package com.peng.htmlview.tool;
 
-import java.io.File;
+import org.mozilla.universalchardet.UniversalDetector;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FileTool {
 
-    public static String charset(String path) {
+    public static String codeString(String path) {
+        String charset;
         try {
-            File file = new File(path);
-            FileInputStream input = new FileInputStream(file);
-            int pre = (input.read() << 8) + input.read();
-            String code = "UTF-8";
-            switch (pre) {
-                case 0xefbb:
-                    if (input.read() == 0xbf) {
-                        code = "UTF-8";
-                    }
-                    break;
-                case 0xfffe:
-                    code = "Unicode";
-                    break;
-                case 0xfeff:
-                    code = "UTF-16BE";
-                    break;
-                default:
-                    code = "GBK";
-                    break;
+            byte[] buf = new byte[1024];
+            FileInputStream fis = new FileInputStream(path);
+            UniversalDetector detector = new UniversalDetector(null);
+            int read;
+            while ((read = fis.read(buf)) != -1 && !detector.isDone()) {
+                detector.handleData(buf, 0, read);
             }
-            input.close();
-            return code;
+            fis.close();
+            detector.dataEnd();
+            charset = detector.getDetectedCharset();
         } catch (IOException e) {
+            charset = "UTF-8";
         }
-        return "UTF-8";
+        if(charset == null){
+            charset = "UTF-8";
+        }
+        return charset;
     }
+
 
 }

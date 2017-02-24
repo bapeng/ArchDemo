@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,8 +18,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 
-public class HtmlActivity extends Activity {
+public class HtmlActivity extends AppCompatActivity {
 
     private SyncUtil sync = SyncUtil.newSync();
     private LinearLayout rootView;
@@ -49,48 +54,9 @@ public class HtmlActivity extends Activity {
         sync.submit(new SyncUtil.RunBack() {
             @Override
             public Object back() {
-                String charset = FileTool.charset(path);
-                FileInputStream fis = null;
-                InputStreamReader isr = null;
-                BufferedReader reader = null;
-                try {
-                    fis = new FileInputStream(path);
-                    isr = new InputStreamReader(fis, charset);
-                    reader = new BufferedReader(isr);
-                    String str;
-                    while (true) {
-                        str = reader.readLine();
-                        if (str == null) {
-                            break;
-                        } else {
-                            sync.publish(str + "\n");
-                            Thread.sleep(20);
-                        }
-                    }
-                } catch (FileNotFoundException e) {
-                    ShowToast("文件不存在");
-                } catch (IOException e) {
-                } catch (InterruptedException e) {
-                } finally {
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (IOException e) {
-                        }
-                    }
-                    if (isr != null) {
-                        try {
-                            isr.close();
-                        } catch (IOException e) {
-                        }
-                    }
-                    if (fis != null) {
-                        try {
-                            fis.close();
-                        } catch (IOException e) {
-                        }
-                    }
-                }
+                String encode = FileTool.codeString(path);
+                sync.publish("-------文件编码：" + encode + "-------\n\n");
+                decodeFile(path, encode);
                 return null;
             }
         }, new SyncUtil.RunUI() {
@@ -109,6 +75,32 @@ public class HtmlActivity extends Activity {
             }
         });
     }
+
+    public void decodeFile(String path, String encode) {
+        try {
+            FileInputStream fis = new FileInputStream(path);
+            InputStreamReader isr = new InputStreamReader(fis, encode);
+            BufferedReader reader = new BufferedReader(isr);
+            String str;
+            while (true) {
+                str = reader.readLine();
+                if (str == null) {
+                    break;
+                } else {
+                    sync.publish(str + "\n");
+                    Thread.sleep(20);
+                }
+            }
+            reader.close();
+            isr.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            ShowToast("文件不存在");
+        } catch (Exception e) {
+            ShowToast("文件读取错误");
+        }
+    }
+
 
     private String getFileString(String filepath) {
         File file = new File(filepath);
