@@ -15,28 +15,28 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".HtmlActivity"
-            android:label="Html查看器">
+        <activity
+            android:name=".HtmlActivity"
+            android:label="Html查看">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <data android:scheme="file" />
-                <!-- <data android:scheme="content" /> -->
                 <data android:mimeType="text/html" />
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="application/xhtml+xml" />
                 <data android:mimeType="application/xml" />
             </intent-filter>
         </activity>
-        <activity android:name=".EveryActivity"
-            android:label="Intent查看器">
+        <activity
+            android:name=".EveryActivity"
+            android:label="Intent查看">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />

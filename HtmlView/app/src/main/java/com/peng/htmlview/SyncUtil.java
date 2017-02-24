@@ -1,17 +1,9 @@
 package com.peng.htmlview;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.util.SparseArrayCompat;
 import android.util.ArrayMap;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-import android.util.SparseLongArray;
-
-import java.util.Objects;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 简单处理异步任务类
@@ -47,6 +39,14 @@ public class SyncUtil {
             }
         }
     };
+
+    public void runUI(Runnable runnable){
+        handler.post(runnable);
+    }
+
+    public void runUI(Runnable runnable, long delay){
+        handler.postDelayed(runnable, delay);
+    }
 
     public void submit(Runnable runnable) {
         if (runnable == null) return;
