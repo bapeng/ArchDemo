@@ -62,11 +62,14 @@ public class HtmlActivity extends Activity {
                             break;
                         } else {
                             sync.publish(str + "\n");
+                            Thread.sleep(50);
                         }
                     }
                 } catch (FileNotFoundException e) {
                     ShowToast("文件不存在");
                 } catch (IOException e) {
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 return null;
             }
