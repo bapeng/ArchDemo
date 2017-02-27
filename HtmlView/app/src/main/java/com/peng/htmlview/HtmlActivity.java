@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.peng.htmlview.tool.FileTool;
+import com.peng.htmlview.tool.ReadUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,8 +22,11 @@ import java.io.InputStreamReader;
 
 public class HtmlActivity extends AppCompatActivity {
 
+    private ReadUtil read = new ReadUtil();
     private SyncUtil sync = SyncUtil.newSync();
+
     private LinearLayout rootView;
+    private NestedScrollView scrollView;
     private TextView textView;
 
     @Override
@@ -34,7 +39,46 @@ public class HtmlActivity extends AppCompatActivity {
 
     private void initView() {
         rootView = (LinearLayout) findViewById(R.id.activity_html);
+        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         textView = (TextView) findViewById(R.id.tv_html);
+
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY + scrollView.getHeight() >= scrollView.computeVerticalScrollRange()) {
+                    readNextPage();
+                }
+            }
+        });
+    }
+
+    public void readNextPage() {
+        if (read.isEnd() || read.isReading()) {
+            return;
+        }
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        final String path = uri.getPath();
+        sync.submit(new SyncUtil.RunBack() {
+            @Override
+            public void back() {
+                try {
+                    read.read(50, new ReadUtil.OnReadLine() {
+                        @Override
+                        public void onRead(String line) {
+                            sync.sendResult(line + "\n");
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (IOException e) {
+                    ShowToast("文件读取错误");
+                }
+            }
+        }, runUI);
     }
 
     private void loadData() {
@@ -43,34 +87,51 @@ public class HtmlActivity extends AppCompatActivity {
         builder.append(intent.toString()).append("\n\n");
         Uri uri = intent.getData();
         String type = intent.getType();
-        textView.append(uri.toString() + "\n");
-        textView.append("mime=" + type + "\n");
-        final String path = uri.getPath();
+        textView.append("URI："+uri.toString() + "\n");
+        textView.append("MIME：" + type + "\n");
 
+        final String path = uri.getPath();
         sync.submit(new SyncUtil.RunBack() {
             @Override
-            public Object back() {
-                String encode = FileTool.codeString(path);
-                sync.publish("文件编码：" + encode + "\n\n");
-                decodeFile(path, encode);
-                return null;
-            }
-        }, new SyncUtil.RunUI() {
-            @Override
-            public void ui(Object object) {
-                if (object != null) {
-                    textView.append(object.toString());
+            public void back() {
+                if (!read.isOpen()) {
+                    String encode = FileTool.codeString(path);
+                    sync.sendResult("编码：" + encode + "\n\n");
+                    try {
+                        read.open(path, encode);
+                    } catch (FileNotFoundException e) {
+                        sync.sendResult("文件不存在");
+                    } catch (Exception e) {
+                        sync.sendResult("文件读取错误");
+                    }
+                }
+                try {
+                    read.read(50, new ReadUtil.OnReadLine() {
+                        @Override
+                        public void onRead(String line) {
+                            sync.sendResult(line + "\n");
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (IOException e) {
+                    ShowToast("文件读取错误");
                 }
             }
-        }, new SyncUtil.RunUI() {
-            @Override
-            public void ui(Object object) {
-                if (object != null) {
-                    textView.append(object.toString());
-                }
-            }
-        });
+        }, runUI);
     }
+
+    private SyncUtil.RunUI runUI = new SyncUtil.RunUI() {
+        @Override
+        public void ui(Object object) {
+            if (object != null) {
+                textView.append(object.toString());
+            }
+        }
+    };
 
     public void decodeFile(String path, String encode) {
         try {
@@ -83,7 +144,7 @@ public class HtmlActivity extends AppCompatActivity {
                 if (str == null) {
                     break;
                 } else {
-                    sync.publish(str + "\n");
+                    sync.sendUpdate(str + "\n");
                     Thread.sleep(20);
                 }
             }
@@ -126,4 +187,10 @@ public class HtmlActivity extends AppCompatActivity {
         Snackbar.make(rootView, msg, Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        read.close();
+
+    }
 }

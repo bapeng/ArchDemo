@@ -1,5 +1,6 @@
 package com.peng.htmlview;
 
+import android.content.pm.ProviderInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -10,41 +11,44 @@ import android.util.ArrayMap;
  */
 public class SyncUtil {
 
+    private static int UPDATE = 500;
+    private static int RESULT = 501;
+
     public static SyncUtil newSync() {
         return new SyncUtil();
     }
 
-    private ArrayMap<Long, RunUI> arr;
+    private ArrayMap<Long, Argument> arguArray;
 
     private SyncUtil() {
-        this.arr = new ArrayMap<>();
+        this.arguArray = new ArrayMap<>();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 1000) {
-                Object[] obs = (Object[]) msg.obj;
-                Object data = obs[0];
-                RunUI result = (RunUI) obs[2];
-                result.ui(data);
-            } else if (msg.what == 2000) {
-                Object[] obs = (Object[]) msg.obj;
-                Object data = obs[0];
-                Object uiu = obs[1];
-                if (uiu != null) {
-                    RunUI update = (RunUI) obs[1];
-                    update.ui(data);
+            if (msg.what == UPDATE) {
+                Argument obj = (Argument) msg.obj;
+                if (obj.update != null) {
+                    obj.update.ui(obj.data);
+                }
+            }
+            if (msg.what == RESULT) {
+                Argument obj = (Argument) msg.obj;
+                if (obj.result != null) {
+                    obj.result.ui(obj.data);
                 }
             }
         }
     };
 
     public void runUI(Runnable runnable) {
+        if (runnable == null) return;
         handler.post(runnable);
     }
 
     public void runUI(Runnable runnable, long delay) {
+        if (runnable == null) return;
         handler.postDelayed(runnable, delay);
     }
 
@@ -57,15 +61,13 @@ public class SyncUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Object data = task.back();
-                Object[] obs = new Object[3];
-                obs[0] = data;
-                obs[1] = null;
-                obs[2] = result;
-
-                Message msg = Message.obtain(handler, 1000);
-                msg.obj = obs;
-                handler.sendMessage(msg);
+                long tid = Thread.currentThread().getId();
+                Argument as = new Argument();
+                as.update = null;
+                as.result = result;
+                arguArray.put(tid, as);
+                task.back();
+                arguArray.remove(tid);
             }
         }).start();
     }
@@ -75,41 +77,56 @@ public class SyncUtil {
             @Override
             public void run() {
                 long tid = Thread.currentThread().getId();
-                arr.put(tid, update);
-
-                Object data = task.back();
-                Object[] obs = new Object[3];
-                obs[0] = data;
-                obs[1] = update;
-                obs[2] = result;
-
-                Message msg = Message.obtain(handler, 1000);
-                msg.obj = obs;
-                handler.sendMessage(msg);
-                arr.remove(tid);
+                Argument as = new Argument();
+                as.update = update;
+                as.result = result;
+                arguArray.put(tid, as);
+                task.back();
+                arguArray.remove(tid);
             }
         }).start();
     }
 
-    public void publish(Object data) {
+    //发送更新数据到UI线程
+    public void sendUpdate(Object data) {
         long tid = Thread.currentThread().getId();
-        RunUI uiu = arr.get(tid);
+        Argument argument = arguArray.get(tid);
 
-        Object[] obs = new Object[2];
-        obs[0] = data;
-        obs[1] = uiu;
+        Argument obj = new Argument();
+        obj.data = data;
+        obj.update = argument.update;
 
-        Message msg = Message.obtain(handler, 2000);
-        msg.obj = obs;
+        Message msg = Message.obtain(handler, UPDATE);
+        msg.obj = obj;
         handler.sendMessage(msg);
     }
 
+    //发送最后的结果到UI线程
+    public void sendResult(Object data) {
+        long tid = Thread.currentThread().getId();
+        Argument argument = arguArray.get(tid);
+
+        Argument obj = new Argument();
+        obj.data = data;
+        obj.result = argument.result;
+
+        Message msg = Message.obtain(handler, RESULT);
+        msg.obj = obj;
+        handler.sendMessage(msg);
+    }
+
+    private class Argument {
+        Object data;
+        RunUI update;
+        RunUI result;
+    }
+
     public interface RunBack {
-        public Object back();
+        void back();
     }
 
     public interface RunUI {
-        public void ui(Object object);
+        void ui(Object object);
     }
 
 
