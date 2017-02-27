@@ -34,7 +34,7 @@ public class ReadUtil {
     }
 
     public synchronized boolean isReading() {
-        return isEnd;
+        return isReading;
     }
 
     public synchronized void close() {
