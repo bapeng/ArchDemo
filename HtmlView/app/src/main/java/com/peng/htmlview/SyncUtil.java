@@ -1,6 +1,5 @@
 package com.peng.htmlview;
 
-import android.content.pm.ProviderInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
