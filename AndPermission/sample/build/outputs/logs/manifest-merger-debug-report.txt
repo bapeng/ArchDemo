@@ -1,0 +1,148 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:17:1-63:12
+	package
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:18:11-53
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:17:11-69
+	android:versionCode
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+uses-permission#android.permission.CALL_PHONE
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:21:5-68
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:21:22-66
+uses-permission#android.permission.READ_SMS
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:22:5-66
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:22:22-64
+uses-permission#android.permission.SEND_SMS
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:23:5-66
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:23:22-64
+uses-permission#android.permission.READ_CONTACTS
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:24:5-71
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:24:22-69
+uses-permission#android.permission.WRITE_CONTACTS
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:25:5-72
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:25:22-70
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:26:5-79
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:26:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:27:5-80
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:27:22-78
+uses-permission#android.permission.READ_CALENDAR
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:28:5-71
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:28:22-69
+uses-permission#android.permission.WRITE_CALENDAR
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:29:5-72
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:29:22-70
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:30:5-78
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:30:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:31:5-80
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:31:22-78
+application
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:33:5-61:19
+MERGED from [com.android.support:design:25.1.0] C:\Users\Tim\.android\build-cache\3f9f14f1f6c051017cf94bc51d1e3c001d45e61a\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.1.0] C:\Users\Tim\.android\build-cache\5eb36eca06e37bf550bd8e042939cc9b5303fd0e\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] C:\Users\Tim\.android\build-cache\cc493730b2e6554bd0885d026130c60f3e0918e0\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.1.0] C:\Users\Tim\.android\build-cache\ac435d55200d7cee5395ed3303b1d1f9740d1450\output\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:transition:25.1.0] C:\Users\Tim\.android\build-cache\7e6f3063cc33b62debd9487735e22edb632fa390\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Tim\.android\build-cache\e41de1ac39f97182de46d98655a56edbe5bd7587\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Tim\.android\build-cache\32b2ae1891b2be1a53dced1406e555798f948916\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Tim\.android\build-cache\c3ec9c9d0079a68682c1c11c9b60140ddb99e737\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Tim\.android\build-cache\6fbd675810807e33faf32ed555075bdfcf52a09d\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Tim\.android\build-cache\7ecf800856b2be1d629936f92283767aece7fc30\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Tim\.android\build-cache\52e2b8055d8e01d45f7c5c300324fc7245f17e29\output\AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:36:9-41
+	android:supportsRtl
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:37:9-35
+	android:allowBackup
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:34:9-35
+	android:icon
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:35:9-43
+	android:theme
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:38:9-40
+activity#com.yanzhenjie.permission.sample.MainActivity
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:39:9-48:20
+	android:label
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:41:13-45
+	android:theme
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:42:13-56
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:40:13-41
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:43:13-47:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:44:17-68
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:44:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:46:17-76
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:46:27-74
+activity#com.yanzhenjie.permission.sample.PermissionActivity
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:49:9-52:58
+	android:label
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:51:13-59
+	android:theme
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:52:13-56
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:50:13-47
+activity#com.yanzhenjie.permission.sample.RationalePermissionActivity
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:53:9-56:58
+	android:label
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:55:13-52
+	android:theme
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:56:13-56
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:54:13-56
+activity#com.yanzhenjie.permission.sample.ListenerActivity
+ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:57:9-60:58
+	android:label
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:59:13-59
+	android:theme
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:60:13-56
+	android:name
+		ADDED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml:58:13-45
+uses-sdk
+INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.yanzhenjie:permission:1.0.5] C:\Users\Tim\.android\build-cache\11863e35afaa5231c7dfa1424905851621ce4e98\output\AndroidManifest.xml:21:5-23:41
+MERGED from [com.yanzhenjie.alertdialog:alertdialog:1.0.0] C:\Users\Tim\.android\build-cache\f35bc08bd25eca15712216dfc325050c316abd98\output\AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support:design:25.1.0] C:\Users\Tim\.android\build-cache\3f9f14f1f6c051017cf94bc51d1e3c001d45e61a\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.1.0] C:\Users\Tim\.android\build-cache\5eb36eca06e37bf550bd8e042939cc9b5303fd0e\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] C:\Users\Tim\.android\build-cache\cc493730b2e6554bd0885d026130c60f3e0918e0\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.1.0] C:\Users\Tim\.android\build-cache\ac435d55200d7cee5395ed3303b1d1f9740d1450\output\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:recyclerview-v7:25.1.0] C:\Users\Tim\.android\build-cache\3f96ebfdd0df455783a1cbe5ae101894109e45dc\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.1.0] C:\Users\Tim\.android\build-cache\7e6f3063cc33b62debd9487735e22edb632fa390\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Tim\.android\build-cache\e41de1ac39f97182de46d98655a56edbe5bd7587\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Tim\.android\build-cache\32b2ae1891b2be1a53dced1406e555798f948916\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Tim\.android\build-cache\c3ec9c9d0079a68682c1c11c9b60140ddb99e737\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Tim\.android\build-cache\6fbd675810807e33faf32ed555075bdfcf52a09d\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Tim\.android\build-cache\7ecf800856b2be1d629936f92283767aece7fc30\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Tim\.android\build-cache\52e2b8055d8e01d45f7c5c300324fc7245f17e29\output\AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.1.0] C:\Users\Tim\.android\build-cache\3f9f14f1f6c051017cf94bc51d1e3c001d45e61a\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Tim\Desktop\AndPermission\sample\src\main\AndroidManifest.xml
