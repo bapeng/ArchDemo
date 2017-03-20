@@ -55,23 +55,21 @@ public class AnimActivity extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startAnim2();
+                startAnim1();
             }
         });
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stopAnim();
             }
         });
 
         one.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    tv1.setText(getOneValue() + "");
-                }
+                tv1.setText("刚性："+getOneValue() + "");
             }
 
             @Override
@@ -88,9 +86,7 @@ public class AnimActivity extends AppCompatActivity {
         two.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    tv2.setText(getTwoValue() + "");
-                }
+                tv2.setText("阻尼："+getTwoValue() + "");
             }
 
             @Override
@@ -104,6 +100,8 @@ public class AnimActivity extends AppCompatActivity {
             }
         });
 
+        one.setProgress(0);
+        two.setProgress(0);
 
     }
 
@@ -112,22 +110,27 @@ public class AnimActivity extends AppCompatActivity {
     }
 
     private float getTwoValue() {
-        return two.getProgress() / 100f;
+        return two.getProgress() / 10f;
     }
 
+    SpringSystem system = SpringSystem.create();
+    Spring spring;
+
     private void startAnim1() {
-        SpringSystem system = SpringSystem.create();
+        if(spring != null){
+            spring.destroy();
+        }
+        spring = system.createSpring();
 
-        Spring spring = system.createSpring();
-        SpringConfig config = SpringConfig.fromBouncinessAndSpeed(25, 20);
-
+        SpringConfig config = new SpringConfig(getOneValue(), getTwoValue());
         spring.setSpringConfig(config);
+        spring.setCurrentValue(0.5f, true);
 
         spring.addListener(new SimpleSpringListener() {
             @Override
             public void onSpringUpdate(Spring spring) {
                 float value = (float) spring.getCurrentValue();
-                float cv = 1f - (value * 0.5f);
+                float cv = value;
                 imageView.setScaleX(cv);
                 imageView.setScaleY(cv);
             }
@@ -135,24 +138,44 @@ public class AnimActivity extends AppCompatActivity {
         spring.setEndValue(1);
     }
 
+    SpringAnimation animx;
+    SpringAnimation animy;
+
     private void startAnim2() {
-        SpringAnimation animx = new SpringAnimation(imageView, SpringAnimation.SCALE_X);
-        SpringAnimation animy = new SpringAnimation(imageView, SpringAnimation.SCALE_Y);
+        if (animx != null) {
+            animx.cancel();
+        }
+        if (animy != null) {
+            animy.cancel();
+        }
 
-        animx.setStartValue(1);
-        animy.setStartValue(1);
+        animx = new SpringAnimation(imageView, SpringAnimation.SCALE_X);
+        animy = new SpringAnimation(imageView, SpringAnimation.SCALE_Y);
 
-        SpringForce force = new SpringForce(0.5f);
+        animx.setStartValue(0.5f);
+        animy.setStartValue(0.5f);
+        SpringForce force = new SpringForce(1f);
 
         force.setStiffness(getOneValue());
-        force.setDampingRatio(getTwoValue());
+        force.setDampingRatio(getTwoValue()/10f);
 
         animx.setSpring(force);
         animy.setSpring(force);
 
         animx.start();
         animy.start();
+    }
 
+    private void stopAnim() {
+        if (animx != null) {
+            animx.cancel();
+        }
+        if (animy != null) {
+            animy.cancel();
+        }
+        if(spring != null){
+            spring.destroy();
+        }
     }
 
 }
