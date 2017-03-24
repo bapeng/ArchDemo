@@ -99,10 +99,8 @@ public class AnimActivity extends AppCompatActivity {
 
             }
         });
-
-        one.setProgress(0);
-        two.setProgress(0);
-
+        one.setProgress(70);
+        two.setProgress(15);
     }
 
     private float getOneValue() {
