@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnjs"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#707070"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
+            android:text="Js"
+            android:textColor="@android:color/holo_orange_light" />
+
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="输入地址"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="https://www.baidu.com"
+            android:singleLine="true"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/btnopen"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#707070"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="onOpen"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            android:text="打开"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/contorlview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:background="@drawable/tab_bg"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:onClick="onBack"
+                android:src="@android:drawable/ic_media_rew"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginLeft="5dp"
+                android:scaleType="fitCenter"
+                android:onClick="onForward"
+                android:src="@android:drawable/ic_media_ff"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:background="#90010101"
+            android:textColor="#ffe0e0e0"
+            android:layout_marginRight="50dp"
+            android:layout_gravity="bottom|left"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="20dp"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_menu_manage"/>
+
+    </FrameLayout>
+
+</LinearLayout>
