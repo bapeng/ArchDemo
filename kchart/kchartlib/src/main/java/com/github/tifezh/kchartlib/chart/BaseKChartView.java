@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.List;
  * k线图
  * Created by tian on 2016/5/3.
  */
-public abstract class BaseKChartView extends ScrollAndScaleView {
+public abstract class BaseKChartView extends BaseTouchView {
     private int mChildDrawPosition = 0;
 
     private float mTranslateX = Float.MIN_VALUE;
@@ -244,6 +245,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         //保存之前的平移，缩放
         canvas.save();
         canvas.translate(mTranslateX * mScaleX, 0);
+        Log.d("biantest","mTranslateX=" + mTranslateX +"  mScaleX="+mScaleX);
         canvas.scale(mScaleX, 1);
         for (int i = mStartIndex; i <= mStopIndex; i++) {
             Object currentPoint = getItem(i);

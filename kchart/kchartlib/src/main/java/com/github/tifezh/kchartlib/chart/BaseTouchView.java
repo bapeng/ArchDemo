@@ -13,9 +13,10 @@ import android.widget.RelativeLayout;
  * 可以滑动和放大的view
  * Created by tian on 2016/5/3.
  */
-public abstract class ScrollAndScaleView extends RelativeLayout implements
+public abstract class BaseTouchView extends RelativeLayout implements
         GestureDetector.OnGestureListener,
         ScaleGestureDetector.OnScaleGestureListener {
+
     protected int mScrollX = 0;
     protected GestureDetectorCompat mDetector;
     protected ScaleGestureDetector mScaleDetector;
@@ -38,17 +39,17 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean mScaleEnable=true;
 
-    public ScrollAndScaleView(Context context) {
+    public BaseTouchView(Context context) {
         super(context);
         init();
     }
 
-    public ScrollAndScaleView(Context context, AttributeSet attrs) {
+    public BaseTouchView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ScrollAndScaleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BaseTouchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
