@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.github.tifezh.kchart.chart.MinuteLineEntity;
-import com.github.tifezh.kchartlib.chart.MinuteChartView;
+import com.github.tifezh.kchart.chart.MinuteEntity;
+import com.github.tifezh.kchartlib.chart.MinuteView;
 import com.github.tifezh.kchartlib.utils.DateUtil;
 
 import java.text.ParseException;
@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
  * Created by tifezh on 2017/7/20.
  */
 
-public class MinuteChartActivity extends AppCompatActivity {
+public class MinuteActivity extends AppCompatActivity {
 
 
     @Bind(R.id.minuteChartView)
-    MinuteChartView mMinuteChartView;
+    MinuteView mMinuteChartView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MinuteChartActivity extends AppCompatActivity {
             //休息结束时间
             Date secondStartTime = DateUtil.shortTimeFormat.parse("13:00");
             //获取随机生成的数据
-            List<MinuteLineEntity> minuteData =
+            List<MinuteEntity> minuteData =
                     DataRequest.getMinuteData(this,startTime,
                             endTime,
                             firstEndTime,

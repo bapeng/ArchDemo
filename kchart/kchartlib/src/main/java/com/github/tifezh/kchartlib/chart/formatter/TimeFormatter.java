@@ -1,6 +1,6 @@
 package com.github.tifezh.kchartlib.chart.formatter;
 
-import com.github.tifezh.kchartlib.chart.impl.IDateTimeFormatter;
+import com.github.tifezh.kchartlib.chart.impl.ITimeFormatter;
 import com.github.tifezh.kchartlib.utils.DateUtil;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by tifezh on 2016/6/21.
  */
 
-public class TimeFormatter implements IDateTimeFormatter {
+public class TimeFormatter implements ITimeFormatter {
     @Override
     public String format(Date date) {
         if (date == null) {

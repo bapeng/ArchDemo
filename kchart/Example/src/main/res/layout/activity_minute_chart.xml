@@ -117,7 +117,7 @@
         android:layout_height="0.5dp"
         android:background="#494949" />
 
-    <com.github.tifezh.kchartlib.chart.MinuteChartView
+    <com.github.tifezh.kchartlib.chart.MinuteView
         android:id="@+id/minuteChartView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

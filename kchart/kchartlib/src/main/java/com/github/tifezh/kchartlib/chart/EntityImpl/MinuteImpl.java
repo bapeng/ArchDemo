@@ -1,13 +1,8 @@
 package com.github.tifezh.kchartlib.chart.EntityImpl;
 
-import java.text.ParseException;
 import java.util.Date;
 
-/**
- * Created by tifezh on 2017/7/19.
- */
-
-public interface MinuteLineImpl {
+public interface MinuteImpl {
 
     /**
      * @return 获取均价

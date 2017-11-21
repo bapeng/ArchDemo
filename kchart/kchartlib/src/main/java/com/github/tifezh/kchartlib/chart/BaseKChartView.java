@@ -19,7 +19,7 @@ import com.github.tifezh.kchartlib.chart.formatter.TimeFormatter;
 import com.github.tifezh.kchartlib.chart.formatter.ValueFormatter;
 import com.github.tifezh.kchartlib.chart.impl.IAdapter;
 import com.github.tifezh.kchartlib.chart.impl.IChartDraw;
-import com.github.tifezh.kchartlib.chart.impl.IDateTimeFormatter;
+import com.github.tifezh.kchartlib.chart.impl.ITimeFormatter;
 import com.github.tifezh.kchartlib.chart.impl.IValueFormatter;
 
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     private List<IChartDraw> mChildDraws = new ArrayList<>();
 
     private IValueFormatter mValueFormatter;
-    private IDateTimeFormatter mDateTimeFormatter;
+    private ITimeFormatter mDateTimeFormatter;
 
     protected KChartTabView mKChartTabView;
 
@@ -595,7 +595,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 获取DatetimeFormatter
      * @return 时间格式化器
      */
-    public IDateTimeFormatter getDateTimeFormatter() {
+    public ITimeFormatter getDateTimeFormatter() {
         return mDateTimeFormatter;
     }
 
@@ -603,7 +603,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 设置dateTimeFormatter
      * @param dateTimeFormatter 时间格式化器
      */
-    public void setDateTimeFormatter(IDateTimeFormatter dateTimeFormatter) {
+    public void setDateTimeFormatter(ITimeFormatter dateTimeFormatter) {
         mDateTimeFormatter = dateTimeFormatter;
     }
 

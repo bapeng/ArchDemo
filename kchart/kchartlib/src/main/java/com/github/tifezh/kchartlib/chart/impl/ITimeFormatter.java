@@ -7,6 +7,6 @@ import java.util.Date;
  * Created by tifezh on 2016/6/21.
  */
 
-public interface IDateTimeFormatter {
+public interface ITimeFormatter {
     String format(Date date);
 }

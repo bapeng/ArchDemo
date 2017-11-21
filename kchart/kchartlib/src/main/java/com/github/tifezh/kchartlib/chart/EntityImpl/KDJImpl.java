@@ -5,10 +5,11 @@ package com.github.tifezh.kchartlib.chart.EntityImpl;
  */
 
 public interface KDJImpl {
-    public float getK();
+    
+    float getK();
 
-    public float getD();
+    float getD();
 
-    public float getJ();
+    float getJ();
 
 }

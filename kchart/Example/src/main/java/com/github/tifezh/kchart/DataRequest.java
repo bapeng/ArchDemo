@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.tifezh.kchart.chart.KLineEntity;
-import com.github.tifezh.kchart.chart.MinuteLineEntity;
+import com.github.tifezh.kchart.chart.MinuteEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -69,17 +69,17 @@ public class DataRequest {
     /**
      * 随机生成分时数据
      */
-    public static List<MinuteLineEntity>
+    public static List<MinuteEntity>
     getMinuteData(Context context,
                   @NonNull Date startTime,
                   @NonNull Date endTime,
                   @Nullable Date firstEndTime,
                   @Nullable Date secondStartTime) {
-        List<MinuteLineEntity> list = new ArrayList<>();
+        List<MinuteEntity> list = new ArrayList<>();
         long startDate=startTime.getTime();
         if(firstEndTime==null&&secondStartTime==null) {
             while (startDate <= endTime.getTime()) {
-                MinuteLineEntity data = new MinuteLineEntity();
+                MinuteEntity data = new MinuteEntity();
                 data.time = new Date(startDate);
                 startDate += 60000;
                 list.add(data);
@@ -87,14 +87,14 @@ public class DataRequest {
         }
         else {
             while (startDate <= firstEndTime.getTime()) {
-                MinuteLineEntity data = new MinuteLineEntity();
+                MinuteEntity data = new MinuteEntity();
                 data.time = new Date(startDate);
                 startDate += 60000;
                 list.add(data);
             }
             startDate=secondStartTime.getTime();
             while (startDate <= endTime.getTime()) {
-                MinuteLineEntity data = new MinuteLineEntity();
+                MinuteEntity data = new MinuteEntity();
                 data.time = new Date(startDate);
                 startDate += 60000;
                 list.add(data);
@@ -103,7 +103,7 @@ public class DataRequest {
         randomLine(list);
         float sum = 0;
         for (int i = 0; i < list.size(); i++) {
-            MinuteLineEntity data = list.get(i);
+            MinuteEntity data = list.get(i);
             sum += data.price;
             data.avg = 1f * sum / (i + 1);
         }
@@ -113,7 +113,7 @@ public class DataRequest {
     /**
      * 生成随机曲线
      */
-    private static void randomLine(List<MinuteLineEntity> list) {
+    private static void randomLine(List<MinuteEntity> list) {
         float STEP_MAX = 0.9f;
         float STEP_CHANGE = 1f;
         float HEIGHT_MAX = 200;

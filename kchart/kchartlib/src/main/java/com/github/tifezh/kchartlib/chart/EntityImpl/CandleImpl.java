@@ -9,35 +9,28 @@ public interface CandleImpl {
 
     /**
      * 开盘价
-     *
-     * @return
      */
-    public float getOpenPrice();
+    float getOpenPrice();
 
     /**
      * 最高价
-     *
-     * @return
      */
-    public float getHighPrice();
+    float getHighPrice();
 
     /**
      * 最低价
-     *
-     * @return
      */
-    public float getLowPrice();
+    float getLowPrice();
 
     /**
      * 收盘价
-     *
-     * @return
      */
-    public float getClosePrice();
+    float getClosePrice();
 
-    public float getMA5Price();
 
-    public float getMA10Price();
+    float getMA5Price();
 
-    public float getMA20Price();
+    float getMA10Price();
+
+    float getMA20Price();
 }
