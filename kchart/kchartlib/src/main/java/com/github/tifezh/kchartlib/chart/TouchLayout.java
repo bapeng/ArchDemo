@@ -24,6 +24,10 @@ public abstract class TouchLayout extends FrameLayout {
     private int firstID;
     private int secondID;
 
+    private static final float SCALE_MAX = 2F;
+    private static final float SCALE_MIN = 0.5F;
+    private float scale = 1;
+
     private ViewConfiguration configuration;
 
     private OverScroller mScroller;
