@@ -41,7 +41,7 @@ public class MainAction {
     public static void readFile(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        XSSFSheet sheet = workbook.getSheet("20日报");
+        XSSFSheet sheet = workbook.getSheet("入库台账");
 
         XSSFFormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
 
@@ -49,12 +49,16 @@ public class MainAction {
         for (int i = 0; i < 50; i++) {
             XSSFRow row = sheet.getRow(i);
             StringBuilder builder = new StringBuilder();
-            //builder.append("rowNum=" + i).append("  ");
             int cellNum = row.getPhysicalNumberOfCells();
-            for (int j = 0; j < 15; j++) {
-                XSSFCell cell = row.getCell(j);
+            builder.append("rowNum=" + i).append("  cellCount="+row.getPhysicalNumberOfCells()+"  ");
+            for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
+                builder.append("col="+j).append(" ");
                 //System.out.println("addr="+cell.getAddress().toString());
-
+                XSSFCell cell = row.getCell(j);
+                if(cell == null){
+                    builder.append("NULL,");
+                    continue;
+                }
                 if (cell.getCellTypeEnum() == CellType.STRING) {
                     builder.append(cell.getStringCellValue().trim());
                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
