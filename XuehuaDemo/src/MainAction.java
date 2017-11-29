@@ -1,18 +1,18 @@
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.sound.midi.Soundbank;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.util.CellAddress;
+import org.apache.poi.xssf.usermodel.*;
+
 import java.io.*;
+import java.text.SimpleDateFormat;
 
 public class MainAction {
 
-    public static final String path = "C:\\Users\\Tim\\Desktop\\雪花表格\\2016年";
-    public static final String name = "西安工厂2016年1月库存物资明细";
+    public static final String path = "/Users/sierra/Downloads/";
+    public static final String name = "/Users/sierra/Downloads/2017年10月包材日报.xlsx";
 
     public static void main(String[] args) {
 
@@ -30,7 +30,7 @@ public class MainAction {
                 String name = file.getName();
             }
         }
-        File file = files[0];
+        File file = new File(name);
         try {
             readFile(file);
         } catch (Exception e) {
@@ -38,29 +38,64 @@ public class MainAction {
         }
     }
 
-
     public static void readFile(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
-        HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
-        HSSFSheet sheet = workbook.getSheet("明细");
-        for (int i = 0; i < 100; i++) {
-            HSSFRow row = sheet.getRow(i);
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFSheet sheet = workbook.getSheet("20日报");
+
+        XSSFFormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
+
+        int rownum = Math.min(50, sheet.getPhysicalNumberOfRows());
+        for (int i = 0; i < 50; i++) {
+            XSSFRow row = sheet.getRow(i);
             StringBuilder builder = new StringBuilder();
-            builder.append("rowNum=" + i).append("  ");
-            for (int j = 0; j < 13; j++) {
-                HSSFCell cell = row.getCell(j);
+            //builder.append("rowNum=" + i).append("  ");
+            int cellNum = row.getPhysicalNumberOfCells();
+            for (int j = 0; j < 15; j++) {
+                XSSFCell cell = row.getCell(j);
+                //System.out.println("addr="+cell.getAddress().toString());
+
                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                    builder.append(cell.getStringCellValue());
+                    builder.append(cell.getStringCellValue().trim());
                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                    builder.append(cell.getNumericCellValue());
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                        String time = format.format(DateUtil.getJavaDate(cell.getNumericCellValue()));
+                        builder.append(time);
+                    } else {
+                        builder.append(cell.getNumericCellValue());
+                    }
                 } else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
                     builder.append(cell.getBooleanCellValue());
                 } else if (cell.getCellTypeEnum() == CellType.ERROR) {
-                    builder.append(cell.toString());
+                    builder.append("error");
                 } else if (cell.getCellTypeEnum() == CellType.FORMULA) {
-                    builder.append("formula:"+cell.toString());
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                        String time = format.format(DateUtil.getJavaDate(cell.getNumericCellValue()));
+                        builder.append("form:" + time);
+                    } else {
+                        builder.append("form:" + cell.getCTCell().getV());
+                    }
+
+//                    try {
+//                        CellType type = evaluator.evaluateFormulaCellEnum(cell);
+//                        if(type == CellType.STRING){
+//                            CellValue value =  evaluator.evaluate(cell);
+//                            builder.append(value.getStringValue());
+//                        }else if(type == CellType.NUMERIC){
+//                            CellValue value =  evaluator.evaluate(cell);
+//                            builder.append(value.getNumberValue());
+//                        }else {
+//                            builder.append("value");
+//                        }
+//                    } catch (Exception e) {
+//                        builder.append("Error");
+//                    }
+                } else if (cell.getCellTypeEnum() == CellType.BLANK) {
+                    builder.append("__");
                 }
-                builder.append("，   ");
+                builder.append(",");
             }
             System.out.println(builder.toString());
         }
