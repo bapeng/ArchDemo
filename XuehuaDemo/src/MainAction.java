@@ -1,18 +1,23 @@
 
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.util.CellAddress;
-import org.apache.poi.xssf.usermodel.*;
+import sun.misc.Cache;
 
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class MainAction {
 
     public static final String path = "/Users/sierra/Downloads/";
-    public static final String name = "/Users/sierra/Downloads/2017年10月包材日报.xlsx";
+    //public static final String name = "/Users/sierra/Downloads/2017年10月包材日报.xlsx";
+    public static final String name = "C:\\Users\\Tim\\Desktop\\雪花表格\\2016年\\西安工厂2016年1月库存物资明细.xls";
 
     public static void main(String[] args) {
 
@@ -36,26 +41,27 @@ public class MainAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public static void readFile(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
-        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        XSSFSheet sheet = workbook.getSheet("入库台账");
+        HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+        HSSFSheet sheet = workbook.getSheet("明细");
 
-        XSSFFormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
+        HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(workbook);
 
-        int rownum = Math.min(50, sheet.getPhysicalNumberOfRows());
-        for (int i = 0; i < 50; i++) {
-            XSSFRow row = sheet.getRow(i);
+        int rownum = Math.min(500, sheet.getPhysicalNumberOfRows());
+        for (int i = 0; i < rownum; i++) {
+            HSSFRow row = sheet.getRow(i);
             StringBuilder builder = new StringBuilder();
             int cellNum = row.getPhysicalNumberOfCells();
-            builder.append("rowNum=" + i).append("  cellCount="+row.getPhysicalNumberOfCells()+"  ");
+            builder.append("rowNum=" + i).append("  cellCount=" + row.getPhysicalNumberOfCells() + "  ");
             for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
-                builder.append("col="+j).append(" ");
+                //builder.append("col=" + j).append(" ");
                 //System.out.println("addr="+cell.getAddress().toString());
-                XSSFCell cell = row.getCell(j);
-                if(cell == null){
+                HSSFCell cell = row.getCell(j);
+                if (cell == null) {
                     builder.append("NULL,");
                     continue;
                 }
@@ -74,13 +80,19 @@ public class MainAction {
                 } else if (cell.getCellTypeEnum() == CellType.ERROR) {
                     builder.append("error");
                 } else if (cell.getCellTypeEnum() == CellType.FORMULA) {
-                    if (DateUtil.isCellDateFormatted(cell)) {
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-                        String time = format.format(DateUtil.getJavaDate(cell.getNumericCellValue()));
-                        builder.append("form:" + time);
-                    } else {
-                        builder.append("form:" + cell.getCTCell().getV());
+                    CellValue value = evaluator.evaluate(cell);
+                    if (value.getCellTypeEnum() == CellType.NUMERIC) {
+                        builder.append(value.getNumberValue());
+                    } else if (value.getCellTypeEnum() == CellType.STRING) {
+                        builder.append(value.getStringValue());
                     }
+//                    if (DateUtil.isCellDateFormatted(cell)) {
+//                        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//                        String time = format.format(DateUtil.getJavaDate(cell.getNumericCellValue()));
+//                        builder.append("form:" + time);
+//                    } else {
+//                        //builder.append("form:" + cell.getCTCell().getV());
+//                    }
 
 //                    try {
 //                        CellType type = evaluator.evaluateFormulaCellEnum(cell);
