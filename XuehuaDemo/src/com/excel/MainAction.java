@@ -1,3 +1,4 @@
+package com.excel;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;
@@ -9,7 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class MainAction {
 
@@ -20,10 +23,53 @@ public class MainAction {
     public static void main(String[] args) {
         File file = new File(name);
         try {
-            handleXlsx(file);
+            handleXls2(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void handleXls2(File file) throws Exception {
+        FileInputStream inputStream = new FileInputStream(file);
+        HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+        HSSFSheet sheet = workbook.getSheet("明细");
+        HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(workbook);
+
+        HSSFRow titleRow = sheet.getRow(1);
+
+        String[] titles = {"物资名称", "单位"};
+        List<ValueFilter> fs = ValueUtil.creatFilter(titles, titleRow);
+
+        double allJine = 0;
+
+        for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            HSSFRow row = sheet.getRow(i);
+            if (row == null) {
+                System.out.println("本行为空");
+                continue;
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.append("第" + (i + 1) + "行 ");
+
+            RowFilter rowFilter = new RowFilter(row, fs);
+            if (!rowFilter.isPass()) {
+                continue;
+            }
+
+//            if (jeCell.getCellTypeEnum() == CellType.NUMERIC) {
+//                allJine += jeCell.getNumericCellValue();
+//            }
+//            if (jeCell.getCellTypeEnum() == CellType.FORMULA) {
+//                CellValue value = evaluator.evaluate(jeCell);
+//                if (value.getCellTypeEnum() == CellType.NUMERIC) {
+//                    allJine += value.getNumberValue();
+//                }
+//            }
+
+
+        }
+        DecimalFormat format = new DecimalFormat("0.00");
+        System.out.println("总金额是：" + format.format(allJine));
     }
 
     public static void handleXls(File file) throws Exception {
@@ -31,13 +77,40 @@ public class MainAction {
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         HSSFSheet sheet = workbook.getSheet("明细");
         HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(workbook);
-        int rownum = Math.min(500, sheet.getPhysicalNumberOfRows());
-        for (int i = 0; i < rownum; i++) {
+        int rowCount = sheet.getPhysicalNumberOfRows();
+
+
+        HSSFRow titleRow = sheet.getRow(1);
+        int danwei, jine = -1;
+        for (int j = 0; j < titleRow.getPhysicalNumberOfCells(); j++) {
+            HSSFCell cell = titleRow.getCell(j);
+            if (cell == null) {
+                continue;
+            }
+            if (cell.getCellTypeEnum() == CellType.STRING) {
+                String str = cell.getStringCellValue();
+                if (str != null) {
+                    if (str.trim().contains("单位")) {
+                        danwei = j;
+                    }
+                    if (str.trim().contains("金额")) {
+                        jine = j;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < rowCount; i++) {
             HSSFRow row = sheet.getRow(i);
+            if (row == null) {
+                System.out.println("本行为空");
+                continue;
+            }
             StringBuilder builder = new StringBuilder();
-            int cellNum = row.getPhysicalNumberOfCells();
-            builder.append("rowNum=" + i).append("  cellCount=" + row.getPhysicalNumberOfCells() + "  ");
-            for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
+            builder.append("第" + i + "行 ");
+
+            int cellCount = row.getPhysicalNumberOfCells();
+            for (int j = 0; j < cellCount; j++) {
                 HSSFCell cell = row.getCell(j);
                 if (cell == null) {
                     builder.append("NULL,");
